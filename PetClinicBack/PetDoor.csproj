@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>cc7129c1-2ea4-4f40-aa71-ee45e28eb3fe</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20220905152703_initial.cs" />
+    <Compile Remove="Migrations\20220905152703_initial.Designer.cs" />
+    <Compile Remove="Migrations\20220905155332_initial.cs" />
+    <Compile Remove="Migrations\20220905155332_initial.Designer.cs" />
+    <Compile Remove="Migrations\20220906133424_Initial.cs" />
+    <Compile Remove="Migrations\20220906133424_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20220908134255_test.cs" />
+    <Compile Remove="Migrations\20220908134255_test.Designer.cs" />
+    <Compile Remove="Migrations\20220909143651_2.0.cs" />
+    <Compile Remove="Migrations\20220909143651_2.0.Designer.cs" />
+    <Compile Remove="Migrations\20220914153933_mdss.cs" />
+    <Compile Remove="Migrations\20220914153933_mdss.Designer.cs" />
+    <Compile Remove="Migrations\20220914154324_mdss.cs" />
+    <Compile Remove="Migrations\20220914154324_mdss.Designer.cs" />
+    <Compile Remove="Migrations\20220914154639_mdss.cs" />
+    <Compile Remove="Migrations\20220914154639_mdss.Designer.cs" />
+    <Compile Remove="Migrations\20221105150018_Inicial.cs" />
+    <Compile Remove="Migrations\20221105150018_Inicial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.25" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.25">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+  </ItemGroup>
+
+
+</Project>
