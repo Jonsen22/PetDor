@@ -12,48 +12,54 @@ namespace PetClinicBack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VacineAplicationsController : ControllerBase
+    public class TutorController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public VacineAplicationsController(AppDbContext context)
+        public TutorController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/VacineAplications
+        // GET: api/Tutors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Vacina>>> GetVacinesAplication()
+        public async Task<ActionResult<IEnumerable<Tutor>>> GetTutors()
         {
-            return await _context.Vacina.Include(VP => VP.TipoVacina).ToListAsync();
+     
+            return await _context.Tutor.Include(u => u.Pets)
+                .ThenInclude(Pets => Pets.Vacinas)
+                .ThenInclude(Vacinas => Vacinas.TipoVacina).ToListAsync();
         }
 
-        // GET: api/VacineAplications/5
+        // GET: api/Tutors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Vacina>> GetVacineAplication(int id)
+        public async Task<ActionResult<Tutor>> GetTutor(int id)
         {
-            var vacineAplication = await _context.Vacina.FindAsync(id);
+            var Tutor = await _context.Tutor.Include(u => u.Pets)
+                .ThenInclude(Pets => Pets.Vacinas)
+                .ThenInclude(Vacinas => Vacinas.TipoVacina)
+                .SingleOrDefaultAsync(u => u.TutorId == id);
 
-            if (vacineAplication == null)
+            if (Tutor == null)
             {
                 return NotFound();
             }
 
-            return vacineAplication;
+            return Tutor;
         }
 
-        // PUT: api/VacineAplications/5
+        // PUT: api/Tutors/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVacineAplication(int id, Vacina vacineAplication)
+        public async Task<IActionResult> PutTutor(int id, Tutor Tutor)
         {
-            if (id != vacineAplication.TipoVacinaId)
+            if (id != Tutor.TutorId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(vacineAplication).State = EntityState.Modified;
+            _context.Entry(Tutor).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +67,7 @@ namespace PetClinicBack.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VacineAplicationExists(id))
+                if (!TutorExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +80,37 @@ namespace PetClinicBack.Controllers
             return NoContent();
         }
 
-        // POST: api/VacineAplications
+        // POST: api/Tutors
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Vacina>> PostVacineAplication(Vacina vacineAplication)
+        public async Task<ActionResult<Tutor>> PostTutor(Tutor Tutor)
         {
-            _context.Vacina.Add(vacineAplication);
+            _context.Tutor.Add(Tutor);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVacineAplication", new { id = vacineAplication.TipoVacinaId }, vacineAplication);
+            return CreatedAtAction("GetTutor", new { id = Tutor.TutorId }, Tutor);
         }
 
-        // DELETE: api/VacineAplications/5
+        // DELETE: api/Tutors/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Vacina>> DeleteVacineAplication(int id)
+        public async Task<ActionResult<Tutor>> DeleteTutor(int id)
         {
-            var vacineAplication = await _context.Vacina.FindAsync(id);
-            if (vacineAplication == null)
+            var Tutor = await _context.Tutor.FindAsync(id);
+            if (Tutor == null)
             {
                 return NotFound();
             }
 
-            _context.Vacina.Remove(vacineAplication);
+            _context.Tutor.Remove(Tutor);
             await _context.SaveChangesAsync();
 
-            return vacineAplication;
+            return Tutor;
         }
 
-        private bool VacineAplicationExists(int id)
+        private bool TutorExists(int id)
         {
-            return _context.Vacina.Any(e => e.TipoVacinaId == id);
+            return _context.Tutor.Any(e => e.TutorId == id);
         }
     }
 }

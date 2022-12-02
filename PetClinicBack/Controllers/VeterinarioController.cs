@@ -12,52 +12,48 @@ namespace PetClinicBack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class VeterinarioController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public UsersController(AppDbContext context)
+        public VeterinarioController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Veterinario
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<Veterinario>>> GetVeterinario()
         {
-     
-            return await _context.Usuario.Include(u => u.Pets)
-                .ThenInclude(Pets => Pets.Vacinas).ToListAsync();
+            return await _context.Veterinario.Include(m => m.VetEspecialidade).ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Veterinario/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUser(int id)
+        public async Task<ActionResult<Veterinario>> GetVeterinario(int id)
         {
-            var user = await _context.Usuario.Include(u => u.Pets)
-                .ThenInclude(Pets => Pets.Vacinas)
-                .SingleOrDefaultAsync(u => u.UsuarioId == id);
+            var medic = await _context.Veterinario.FindAsync(id);
 
-            if (user == null)
+            if (medic == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return medic;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Veterinario/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, Usuario user)
+        public async Task<IActionResult> PutMedic(int id, Veterinario Veterinario)
         {
-            if (id != user.UsuarioId)
+            if (id != Veterinario.VeterinarioId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(Veterinario).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +61,7 @@ namespace PetClinicBack.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!VeterinarioExists(id))
                 {
                     return NotFound();
                 }
@@ -78,37 +74,37 @@ namespace PetClinicBack.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Veterinario
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUser(Usuario user)
+        public async Task<ActionResult<Veterinario>> PostMedic(Veterinario Veterinario)
         {
-            _context.Usuario.Add(user);
+            _context.Veterinario.Add(Veterinario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UsuarioId }, user);
+            return CreatedAtAction("GetMedic", new { id = Veterinario.VeterinarioId }, Veterinario);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Veterinario/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Usuario>> DeleteUser(int id)
+        public async Task<ActionResult<Veterinario>> DeleteVeterinario(int id)
         {
-            var user = await _context.Usuario.FindAsync(id);
-            if (user == null)
+            var Veterinario = await _context.Veterinario.FindAsync(id);
+            if (Veterinario == null)
             {
                 return NotFound();
             }
 
-            _context.Usuario.Remove(user);
+            _context.Veterinario.Remove(Veterinario);
             await _context.SaveChangesAsync();
 
-            return user;
+            return Veterinario;
         }
 
-        private bool UserExists(int id)
+        private bool VeterinarioExists(int id)
         {
-            return _context.Usuario.Any(e => e.UsuarioId == id);
+            return _context.Veterinario.Any(e => e.VeterinarioId == id);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace PetClinicBack.Models
     public class Consulta
     {
         public int ConsultaId { get; set; }
-        public string Descricao { get; set; }
+        public string Descricao { get; set; } = null!;
         public char Presente { get; set; }
         public int Custo { get; set; }
         public DateTime Data { get; set; }

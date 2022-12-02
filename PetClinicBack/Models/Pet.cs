@@ -13,10 +13,10 @@ namespace PetShopBack.Models
         public bool Castrado { get; set; } //castrado
         public string Animal { get; set; } //gato, cachorro,etc
         public string Raca { get; set; } //raça
-        public string Descricao { get; set; }
-        [ForeignKey("UsuarioId")]
-        public int UsuarioId { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public string Descricao { get; set; } = null!;
+        [ForeignKey("TutorId")]
+        public int TutorId { get; set; }
+        public virtual Tutor Tutor { get; set; }
         public virtual ICollection<Vacina> Vacinas { get; set; }
     }
 }

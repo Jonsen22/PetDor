@@ -23,7 +23,7 @@ namespace PetClinicBack.Models
 
         public DbSet<Veterinario> Veterinario { get; set; }
         public DbSet<Pet> Pet { get; set; }
-        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Tutor> Tutor { get; set; }
         public DbSet<Vacina> Vacina { get; set; }
         public DbSet<Agenda> Agenda { get; set; }
         public DbSet<Consulta> Consulta { get; set; }
@@ -78,31 +78,31 @@ namespace PetClinicBack.Models
                .HasMaxLength(25)
                .IsRequired();
 
-            mb.Entity<Usuario>()
+            mb.Entity<Tutor>()
                 .Property(u => u.Nome)
                 .HasMaxLength(80)
                 .IsRequired();
 
-            mb.Entity<Usuario>()
+            mb.Entity<Tutor>()
                .Property(u => u.Aniversario)
                .IsRequired()
                .HasColumnType("Date");
 
-            mb.Entity<Usuario>()
+            mb.Entity<Tutor>()
                .Property(u => u.CPF)
                .HasMaxLength(25)
                .IsRequired();
 
-            mb.Entity<Usuario>()
+            mb.Entity<Tutor>()
                .Property(u => u.Email)
                .IsRequired();
 
-            mb.Entity<Usuario>()
+            mb.Entity<Tutor>()
                .Property(u => u.Celular)
                .HasMaxLength(25)
                .IsRequired();
 
-            mb.Entity<Usuario>()
+            mb.Entity<Tutor>()
                .Property(u => u.CEP)
                .HasMaxLength(25)
                .IsRequired();

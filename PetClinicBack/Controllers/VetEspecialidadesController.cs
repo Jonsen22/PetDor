@@ -11,48 +11,48 @@ namespace PetClinicBack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicSpeacilitiesController : ControllerBase
+    public class VetEspecialidadesController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public MedicSpeacilitiesController(AppDbContext context)
+        public VetEspecialidadesController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/MedicSpeacilities
+        // GET: api/VetEspecialidades
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VetEspecialidades>>> GetMedicSpeacilities()
+        public async Task<ActionResult<IEnumerable<VetEspecialidades>>> GetVetEspecialidades()
         {
             return await _context.VetEspecialidades.ToListAsync();
         }
 
-        // GET: api/MedicSpeacilities/5
+        // GET: api/VetEspecialidades/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<VetEspecialidades>> GetMedicSpeacilities(int id)
+        public async Task<ActionResult<VetEspecialidades>> GetVetEspecialidades(int id)
         {
-            var medicSpeacilities = await _context.VetEspecialidades.FindAsync(id);
+            var VetEspecialidades = await _context.VetEspecialidades.FindAsync(id);
 
-            if (medicSpeacilities == null)
+            if (VetEspecialidades == null)
             {
                 return NotFound();
             }
 
-            return medicSpeacilities;
+            return VetEspecialidades;
         }
 
-        // PUT: api/MedicSpeacilities/5
+        // PUT: api/VetEspecialidades/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMedicSpeacilities(int id, VetEspecialidades medicSpeacilities)
+        public async Task<IActionResult> PutVetEspecialidades(int id, VetEspecialidades VetEspecialidades)
         {
-            if (id != medicSpeacilities.VeterinarioId)
+            if (id != VetEspecialidades.VeterinarioId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(medicSpeacilities).State = EntityState.Modified;
+            _context.Entry(VetEspecialidades).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace PetClinicBack.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicSpeacilitiesExists(id))
+                if (!VetEspecialidadesExists(id))
                 {
                     return NotFound();
                 }
@@ -73,20 +73,20 @@ namespace PetClinicBack.Controllers
             return NoContent();
         }
 
-        // POST: api/MedicSpeacilities
+        // POST: api/VetEspecialidades
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<VetEspecialidades>> PostMedicSpeacilities(VetEspecialidades medicSpeacilities)
+        public async Task<ActionResult<VetEspecialidades>> PostVetEspecialidades(VetEspecialidades VetEspecialidades)
         {
-            _context.VetEspecialidades.Add(medicSpeacilities);
+            _context.VetEspecialidades.Add(VetEspecialidades);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (MedicSpeacilitiesExists(medicSpeacilities.VeterinarioId))
+                if (VetEspecialidadesExists(VetEspecialidades.VeterinarioId))
                 {
                     return Conflict();
                 }
@@ -96,26 +96,26 @@ namespace PetClinicBack.Controllers
                 }
             }
 
-            return CreatedAtAction("GetMedicSpeacilities", new { id = medicSpeacilities.VeterinarioId }, medicSpeacilities);
+            return CreatedAtAction("GetVetEspecialidades", new { id = VetEspecialidades.VeterinarioId }, VetEspecialidades);
         }
 
-        // DELETE: api/MedicSpeacilities/5
+        // DELETE: api/VetEspecialidades/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<VetEspecialidades>> DeleteMedicSpeacilities(int id)
+        public async Task<ActionResult<VetEspecialidades>> DeleteVetEspecialidades(int id)
         {
-            var medicSpeacilities = await _context.VetEspecialidades.FindAsync(id);
-            if (medicSpeacilities == null)
+            var VetEspecialidades = await _context.VetEspecialidades.FindAsync(id);
+            if (VetEspecialidades == null)
             {
                 return NotFound();
             }
 
-            _context.VetEspecialidades.Remove(medicSpeacilities);
+            _context.VetEspecialidades.Remove(VetEspecialidades);
             await _context.SaveChangesAsync();
 
-            return medicSpeacilities;
+            return VetEspecialidades;
         }
 
-        private bool MedicSpeacilitiesExists(int id)
+        private bool VetEspecialidadesExists(int id)
         {
             return _context.VetEspecialidades.Any(e => e.VeterinarioId == id);
         }

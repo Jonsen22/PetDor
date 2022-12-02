@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetClinicBack.Models;
 
-namespace PetClinicBack.Migrations
+namespace PetDoor.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221105153003_Inicial")]
+    [Migration("20221202135608_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,19 +173,19 @@ namespace PetClinicBack.Migrations
                         .HasColumnType("nvarchar(80)")
                         .HasMaxLength(80);
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("TutorId")
                         .HasColumnType("int");
 
                     b.HasKey("PetId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("TutorId");
 
                     b.ToTable("Pet");
                 });
 
-            modelBuilder.Entity("PetShopBack.Models.Usuario", b =>
+            modelBuilder.Entity("PetShopBack.Models.Tutor", b =>
                 {
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("TutorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -221,9 +221,9 @@ namespace PetClinicBack.Migrations
                         .HasColumnType("nvarchar(80)")
                         .HasMaxLength(80);
 
-                    b.HasKey("UsuarioId");
+                    b.HasKey("TutorId");
 
-                    b.ToTable("Usuario");
+                    b.ToTable("Tutor");
                 });
 
             modelBuilder.Entity("PetShopBack.Models.Vacina", b =>
@@ -336,9 +336,9 @@ namespace PetClinicBack.Migrations
 
             modelBuilder.Entity("PetShopBack.Models.Pet", b =>
                 {
-                    b.HasOne("PetShopBack.Models.Usuario", "Usuario")
+                    b.HasOne("PetShopBack.Models.Tutor", "Tutor")
                         .WithMany("Pets")
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("TutorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -352,7 +352,7 @@ namespace PetClinicBack.Migrations
                         .IsRequired();
 
                     b.HasOne("PetClinicBack.Models.TipoVacina", "TipoVacina")
-                        .WithMany("DiaAplicacao")
+                        .WithMany("Vacinas")
                         .HasForeignKey("TipoVacinaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -11,48 +11,48 @@ namespace PetClinicBack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SpeacilitiesController : ControllerBase
+    public class TipoVacinaController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public SpeacilitiesController(AppDbContext context)
+        public TipoVacinaController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Speacilities
+        // GET: api/TipoVacina
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Especialidades>>> GetSpeacilities()
+        public async Task<ActionResult<IEnumerable<TipoVacina>>> GetVacina()
         {
-            return await _context.Especialidade.ToListAsync();
+            return await _context.TipoVacina.ToListAsync();
         }
 
-        // GET: api/Speacilities/5
+        // GET: api/TipoVacina/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Especialidades>> GetSpeacilities(int id)
+        public async Task<ActionResult<TipoVacina>> GetVacina(int id)
         {
-            var speacilities = await _context.Especialidade.FindAsync(id);
+            var TipoVacina = await _context.TipoVacina.FindAsync(id);
 
-            if (speacilities == null)
+            if (TipoVacina == null)
             {
                 return NotFound();
             }
 
-            return speacilities;
+            return TipoVacina;
         }
 
-        // PUT: api/Speacilities/5
+        // PUT: api/TipoVacina/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSpeacilities(int id, Especialidades speacilities)
+        public async Task<IActionResult> PutVacina(int id, TipoVacina TipoVacina)
         {
-            if (id != speacilities.EspecialidadesId)
+            if (id != TipoVacina.TipoVacinaId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(speacilities).State = EntityState.Modified;
+            _context.Entry(TipoVacina).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace PetClinicBack.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SpeacilitiesExists(id))
+                if (!TipoVacinaExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace PetClinicBack.Controllers
             return NoContent();
         }
 
-        // POST: api/Speacilities
+        // POST: api/TipoVacina
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Especialidades>> PostSpeacilities(Especialidades speacilities)
+        public async Task<ActionResult<TipoVacina>> PostVacina(TipoVacina TipoVacina)
         {
-            _context.Especialidade.Add(speacilities);
+            _context.TipoVacina.Add(TipoVacina);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSpeacilities", new { id = speacilities.EspecialidadesId }, speacilities);
+            return CreatedAtAction("GetVacina", new { id = TipoVacina.TipoVacinaId }, TipoVacina);
         }
 
-        // DELETE: api/Speacilities/5
+        // DELETE: api/Vacina/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Especialidades>> DeleteSpeacilities(int id)
+        public async Task<ActionResult<TipoVacina>> DeleteVacina(int id)
         {
-            var speacilities = await _context.Especialidade.FindAsync(id);
-            if (speacilities == null)
+            var TipoVacina = await _context.TipoVacina.FindAsync(id);
+            if (TipoVacina == null)
             {
                 return NotFound();
             }
 
-            _context.Especialidade.Remove(speacilities);
+            _context.TipoVacina.Remove(TipoVacina);
             await _context.SaveChangesAsync();
 
-            return speacilities;
+            return TipoVacina;
         }
 
-        private bool SpeacilitiesExists(int id)
+        private bool TipoVacinaExists(int id)
         {
-            return _context.Especialidade.Any(e => e.EspecialidadesId == id);
+            return _context.TipoVacina.Any(e => e.TipoVacinaId == id);
         }
     }
 }

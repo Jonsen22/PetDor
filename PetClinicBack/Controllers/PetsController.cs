@@ -26,14 +26,14 @@ namespace PetClinicBack.Controllers
         public async Task<ActionResult<IEnumerable<Pet>>> GetPets()
         {
             return await _context.
-                Pet.Include(p => p.Usuario).Include(p => p.Vacinas).ToListAsync();
+                Pet.Include(p => p.Tutor).Include(p => p.Vacinas).ToListAsync();
         }
 
         // GET: api/Pets/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Pet>> GetPet(int id)
         {
-            var pet = await _context.Pet.Include(p => p.Usuario)
+            var pet = await _context.Pet.Include(p => p.Tutor)
                 .Include(p => p.Vacinas).SingleOrDefaultAsync(p => p.PetId == id);
 
             if (pet == null)

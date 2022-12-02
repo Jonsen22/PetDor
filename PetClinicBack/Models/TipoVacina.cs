@@ -12,6 +12,6 @@ namespace PetClinicBack.Models
         public int Estoque { get; set; }
         public int Validade { get; set; }
         [JsonIgnore]
-        public ICollection<Vacina> DiaAplicacao { get; set; }
+        public ICollection<Vacina> Vacinas { get; set; }
     }
 }

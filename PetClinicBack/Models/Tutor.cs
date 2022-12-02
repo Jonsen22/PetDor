@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace PetShopBack.Models
 {
-    public class Usuario
+    public class Tutor
     {
-        public int UsuarioId { get; set; }
+        public int TutorId { get; set; }
         public string Nome { get; set; }
         public char Genero { get; set; }
         public DateTime Aniversario { get; set; }

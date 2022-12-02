@@ -6,54 +6,55 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PetClinicBack.Models;
+using PetShopBack.Models;
 
 namespace PetClinicBack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentsController : ControllerBase
+    public class VacinaController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public AppointmentsController(AppDbContext context)
+        public VacinaController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Appointments
+        // GET: api/Vacina
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Consulta>>> GetAppointments()
+        public async Task<ActionResult<IEnumerable<Vacina>>> GetVacina()
         {
-            return await _context.Consulta.Include(a => a.Pet)
-                .Include(a => a.Agenda).ToListAsync();
+            return await _context.Vacina.Include(VP => VP.TipoVacina).ToListAsync();
         }
 
-        // GET: api/Appointments/5
+        // GET: api/Vacina/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Consulta>> GetAppointment(int id)
+        public async Task<ActionResult<Vacina>> GetVacina(int id)
         {
-            var appointment = await _context.Consulta.FindAsync(id);
+            var TipoVacina = await _context.Vacina.Include(v => v.TipoVacina)
+                .SingleOrDefaultAsync(v => v.VacinaId == id);
 
-            if (appointment == null)
+            if (TipoVacina == null)
             {
                 return NotFound();
             }
 
-            return appointment;
+            return TipoVacina;
         }
 
-        // PUT: api/Appointments/5
+        // PUT: api/Vacina/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppointment(int id, Consulta appointment)
+        public async Task<IActionResult> PutTipoVacina(int id, Vacina Vacina)
         {
-            if (id != appointment.ConsultaId)
+            if (id != Vacina.VacinaId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(appointment).State = EntityState.Modified;
+            _context.Entry(Vacina).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +62,7 @@ namespace PetClinicBack.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AppointmentExists(id))
+                if (!VacinaExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +75,37 @@ namespace PetClinicBack.Controllers
             return NoContent();
         }
 
-        // POST: api/Appointments
+        // POST: api/Vacina
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Consulta>> PostAppointment(Consulta appointment)
+        public async Task<ActionResult<Vacina>> PostTipoVacina(Vacina Vacina)
         {
-            _context.Consulta.Add(appointment);
+            _context.Vacina.Add(Vacina);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAppointment", new { id = appointment.ConsultaId }, appointment);
+            return CreatedAtAction("GetTipoVacina", new { id = Vacina.VacinaId }, Vacina);
         }
 
-        // DELETE: api/Appointments/5
+        // DELETE: api/Vacina/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Consulta>> DeleteAppointment(int id)
+        public async Task<ActionResult<Vacina>> DeleteTipoVacina(int id)
         {
-            var appointment = await _context.Consulta.FindAsync(id);
-            if (appointment == null)
+            var Vacina = await _context.Vacina.FindAsync(id);
+            if (Vacina == null)
             {
                 return NotFound();
             }
 
-            _context.Consulta.Remove(appointment);
+            _context.Vacina.Remove(Vacina);
             await _context.SaveChangesAsync();
 
-            return appointment;
+            return Vacina;
         }
 
-        private bool AppointmentExists(int id)
+        private bool VacinaExists(int id)
         {
-            return _context.Consulta.Any(e => e.ConsultaId == id);
+            return _context.Vacina.Any(e => e.VacinaId == id);
         }
     }
 }

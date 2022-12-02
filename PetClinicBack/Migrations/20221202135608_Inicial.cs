@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PetClinicBack.Migrations
+namespace PetDoor.Migrations
 {
     public partial class Inicial : Migration
     {
@@ -37,10 +37,10 @@ namespace PetClinicBack.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuario",
+                name: "Tutor",
                 columns: table => new
                 {
-                    UsuarioId = table.Column<int>(nullable: false)
+                    TutorId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 80, nullable: false),
                     Genero = table.Column<string>(nullable: false),
@@ -52,7 +52,7 @@ namespace PetClinicBack.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
+                    table.PrimaryKey("PK_Tutor", x => x.TutorId);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,16 +88,16 @@ namespace PetClinicBack.Migrations
                     Animal = table.Column<string>(maxLength: 25, nullable: false),
                     Raca = table.Column<string>(maxLength: 80, nullable: false),
                     Descricao = table.Column<string>(nullable: true),
-                    UsuarioId = table.Column<int>(nullable: false)
+                    TutorId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pet", x => x.PetId);
                     table.ForeignKey(
-                        name: "FK_Pet_Usuario_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuario",
-                        principalColumn: "UsuarioId",
+                        name: "FK_Pet_Tutor_TutorId",
+                        column: x => x.TutorId,
+                        principalTable: "Tutor",
+                        principalColumn: "TutorId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -180,9 +180,9 @@ namespace PetClinicBack.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descricao = table.Column<string>(nullable: true),
                     Presente = table.Column<string>(nullable: false),
-                    Custo = table.Column<int>(nullable: false),
+                    Custo = table.Column<int>(nullable: true),
                     Data = table.Column<DateTime>(type: "DateTime", nullable: false),
-                    Duration = table.Column<int>(nullable: false, defaultValue: 30),
+                    Duracao = table.Column<int>(nullable: false, defaultValue: 30),
                     PetId = table.Column<int>(nullable: true),
                     AgendaId = table.Column<int>(nullable: false)
                 },
@@ -219,9 +219,9 @@ namespace PetClinicBack.Migrations
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pet_UsuarioId",
+                name: "IX_Pet_TutorId",
                 table: "Pet",
-                column: "UsuarioId");
+                column: "TutorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vacina_PetId",
@@ -266,7 +266,7 @@ namespace PetClinicBack.Migrations
                 name: "Veterinario");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
+                name: "Tutor");
         }
     }
 }
