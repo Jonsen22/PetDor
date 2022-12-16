@@ -1,8 +1,7 @@
-﻿using PetShopBack.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PetClinicBack.Models
+namespace PetDoor.Models
 {
     public class Agenda
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PetShopBack.Models
+namespace PetDoor.Models
 {
     public class Pet
     {

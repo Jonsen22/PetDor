@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using PetClinicBack.Models;
+using PetDoor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 //https://github.com/jeroenheijmans/sample-ef-core-in-asp-net-core/tree/master/SampleAspNetWithEfCore
 //https://www.youtube.com/watch?v=v7q3pEK1EA0&ab_channel=PatrickGod
-namespace PetClinicBack
+namespace PetDoor
 {
     public class Startup
     {

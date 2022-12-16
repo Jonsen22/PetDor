@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
-using PetShopBack.Models;
+using PetDoor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using PetClinicBack.Models;
 
-namespace PetClinicBack.Models
+namespace PetDoor.Models
 {
 
     public class AppDbContext : DbContext
@@ -29,7 +28,7 @@ namespace PetClinicBack.Models
         public DbSet<Consulta> Consulta { get; set; }
         public DbSet<TipoVacina> TipoVacina { get; set; }
         public DbSet<Especialidades> Especialidade { get; set; }
-        public DbSet<PetClinicBack.Models.VetEspecialidades> VetEspecialidades { get; set; }
+        public DbSet<PetDoor.Models.VetEspecialidades> VetEspecialidades { get; set; }
         public ICollection<VetEspecialidades> VetEspecialidade { get; set; }
 
 

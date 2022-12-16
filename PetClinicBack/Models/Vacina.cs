@@ -1,9 +1,9 @@
-﻿using PetClinicBack.Models;
+﻿using PetDoor.Models;
 using PetShopBack.Enums;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PetShopBack.Models
+namespace PetDoor.Models
 {
     public class Vacina
     {

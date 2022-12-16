@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
-using PetShopBack.Models;
 using System.Collections.Generic;
 
-namespace PetClinicBack.Models
+namespace PetDoor.Models
 {
     public class TipoVacina
     {

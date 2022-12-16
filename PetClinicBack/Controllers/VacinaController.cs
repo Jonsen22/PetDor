@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PetClinicBack.Models;
-using PetShopBack.Models;
+using PetDoor.Models;
 
-namespace PetClinicBack.Controllers
+namespace PetDoor.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

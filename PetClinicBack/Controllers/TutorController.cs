@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PetClinicBack.Models;
-using PetShopBack.Models;
+using PetDoor.Models;
+using PetDoor.Services;
+using PetDoor.Exceptions;
 
-namespace PetClinicBack.Controllers
+namespace PetDoor.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class TutorController : ControllerBase
@@ -88,6 +90,18 @@ namespace PetClinicBack.Controllers
         {
             _context.Tutor.Add(Tutor);
             await _context.SaveChangesAsync();
+
+            try
+            {
+                string cpfValidado = Funcoes.ValidarCpf(Tutor.CPF);
+                
+                if(cpfValidado == "CPF Inválido")
+                    return BadRequest("CPF Inválido");
+            }
+            catch(CpfInvalidoException)
+            {
+                return BadRequest("CPF Inválido");
+            }
 
             return CreatedAtAction("GetTutor", new { id = Tutor.TutorId }, Tutor);
         }

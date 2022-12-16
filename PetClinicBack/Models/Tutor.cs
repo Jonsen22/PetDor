@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PetShopBack.Models
+namespace PetDoor.Models
 {
     public class Tutor
     {

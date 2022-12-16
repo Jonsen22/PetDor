@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
-using PetShopBack.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PetClinicBack.Models
+namespace PetDoor.Models
 {
     public class Especialidades
     {

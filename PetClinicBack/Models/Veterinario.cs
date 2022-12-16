@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using PetClinicBack.Models;
+using PetDoor.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace PetShopBack.Models
+namespace PetDoor.Models
 {
     public class Veterinario
     {
