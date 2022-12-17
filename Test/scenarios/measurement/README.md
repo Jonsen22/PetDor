@@ -20,21 +20,20 @@ Arquivos com o código fonte de medição do SLA:	PetDoor/Teste de Carga - k6/in
 Data de Medição: 14/12/2022
 Descrição das Configurações: Rodando local em um computador com 16GB de memória
 
-SLA (latência, vazão, concorrência)
-SLA1: 
-Latencia: 23.41ms
-Vazão: 600
-Concorrência: 20
+SLA1: <br />
+Latencia: 23.41ms <br />
+Vazão: 600 <br />
+Concorrência: 20 <br />
 
-SLA2: 
-Latencia: 56.45ms
-vazão: 2936
-Concorrência: 100
+SLA2:  <br />
+Latencia: 56.45ms <br />
+vazão: 2936 <br />
+Concorrência: 100 <br />
 
-SLA3: 
-Latencia: 288.82ms
-vazão: 13269
-Concorrência: 500
+SLA3:  <br />
+Latencia: 288.82ms <br />
+vazão: 13269 <br />
+Concorrência: 500 <br />
 
 Potenciais Gargalos do Sistema: A máquina aceita no máximo 1000 processos simultâneos
 
@@ -57,21 +56,20 @@ Data de Medição: 14/12/2022
 
 Descrição das Configurações: Rodando local em um computador com 16GB de memória
 
-SLA (latência, vazão, concorrência)
-SLA1: 
-Latencia: 18.78ms
-Vazão: 600
-Concorrência: 20
+SLA1:  <br />
+Latencia: 18.78ms <br />
+Vazão: 600 <br />
+Concorrência: 20 <br />
 
-SLA2: 
-Latencia: 56.45ms
-vazão: 2902
-Concorrência: 100
+SLA2: <br />
+Latencia: 56.45ms <br />
+vazão: 2902 <br />
+Concorrência: 100 <br />
 
-SLA3: 
-Latencia: 329.34ms
-vazão: 12928
-Concorrência: 500
+SLA3:  <br />
+Latencia: 329.34ms <br />
+vazão: 12928 <br />
+Concorrência: 500 <br />
 
 Potenciais Gargalos do Sistema: A máquina aceita no máximo 1000 processos simultâneos
 
