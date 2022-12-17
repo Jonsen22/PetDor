@@ -77,5 +77,5 @@ vazão: 12928
 Potenciais Gargalos do Sistema 
  A máquina aceita no máximo 1000 processos simultâneos
 
-![Gráficos](https://i.imgur.com/KJc0jTy.png)
+![Gráficos](https://i.imgur.com/7vNXTKf.png)
 
