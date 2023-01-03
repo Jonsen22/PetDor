@@ -1,8 +1,13 @@
 ﻿namespace PetDoor.Services
 {
+using RestSharp;
+    using RestSharp.Authenticators;
+    using System;
+    using System.Collections.Generic;
+
     public class Funcoes
     {
-        public static string ValidarCpf(string cpf)
+        public static bool ValidarCpf(string cpf)
         {
             //int cpfNum = int.Parse(cpf);
             int[] numerosCpf = new int[11];
@@ -22,7 +27,7 @@
                 primeiroDigito = 0;
 
             if(primeiroDigito != numerosCpf[9])
-                return "CPF inválido";
+                return false;
 
             // validação segundo digito 
             int segundoDigito = ((numerosCpf[0] * 11 + numerosCpf[1] * 10 +
@@ -34,9 +39,49 @@
                 segundoDigito = 0;
 
             if (segundoDigito != numerosCpf[10])
-                return "CPF inválido";
+                return false;
 
-            return "CPF válido";
+            return true;
+        }
+
+        public static bool ValidarCep(string Cep)
+        {
+            string url = "https://viacep.com.br";
+            string endpoint = $"/ws/{Cep}/json/";
+            string method = "Get";
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+
+            RestResponse response = ConsumirApi<RestResponse>(url, endpoint, method, headers);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return true;
+
+            return false;
+        }
+
+        public static RestResponse<T> ConsumirApi<T>(string baseUrl, string endpoint, string method, Dictionary<string, string> headers, object payload = null) where T : new()
+        {
+            var client = new RestClient(baseUrl);
+            var request = new RestRequest(endpoint, (Method)Enum.Parse(typeof(Method), method));
+
+            // Add headers
+            foreach (var header in headers)
+            {
+                request.AddHeader(header.Key, header.Value);
+            }
+
+            if (payload != null)
+            {
+                request.AddJsonBody(payload);
+            }
+
+            RestResponse<T> response =  client.Execute<T>(request);
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
+
+            return response;
         }
     }
 }

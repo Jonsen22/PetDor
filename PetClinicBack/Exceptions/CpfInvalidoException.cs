@@ -7,6 +7,8 @@ namespace PetDoor.Exceptions
     {
         public CpfInvalidoException() { }
         public CpfInvalidoException(string message) : base(message) { }
+        public CpfInvalidoException(string message, Exception inner) 
+            : base(message, inner) { }
 
     }
 }

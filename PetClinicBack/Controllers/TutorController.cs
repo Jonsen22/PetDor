@@ -88,22 +88,25 @@ namespace PetDoor.Controllers
         [HttpPost]
         public async Task<ActionResult<Tutor>> PostTutor(Tutor Tutor)
         {
-            _context.Tutor.Add(Tutor);
-            await _context.SaveChangesAsync();
-
             try
             {
-                string cpfValidado = Funcoes.ValidarCpf(Tutor.CPF);
-                
-                if(cpfValidado == "CPF Inválido")
-                    return BadRequest("CPF Inválido");
+                TutorService.addContext(_context);
+                string mensagem = TutorService.validarTutor(Tutor);
+
+                if(mensagem != "Ok")
+                    return BadRequest(mensagem);
+
+                _context.Tutor.Add(Tutor);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetTutor", new { id = Tutor.TutorId }, Tutor);
             }
-            catch(CpfInvalidoException)
+            catch(Exception e)
             {
-                return BadRequest("CPF Inválido");
+                    throw new Exception(e.Message);
             }
 
-            return CreatedAtAction("GetTutor", new { id = Tutor.TutorId }, Tutor);
+            
         }
 
         // DELETE: api/Tutors/5

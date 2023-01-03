@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PetDoor.Models;
+using PetDoor.Services;
 
 namespace PetDoor.Controllers
 {
@@ -32,28 +33,31 @@ namespace PetDoor.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Consulta>> GetAppointment(int id)
         {
-            var appointment = await _context.Consulta.FindAsync(id);
+            var consulta = await _context.Consulta.FindAsync(id);
 
-            if (appointment == null)
+            if (consulta == null)
             {
                 return NotFound();
             }
 
-            return appointment;
+            return consulta;
         }
 
         // PUT: api/Appointments/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppointment(int id, Consulta appointment)
+        public async Task<IActionResult> PutAppointment(int id, Consulta consulta)
         {
-            if (id != appointment.ConsultaId)
+            if (id != consulta.ConsultaId)
             {
                 return BadRequest();
             }
+            if (!ConsultaService.consultaMenosdeDozeHoras(consulta))
+                return BadRequest("Consultas não podem ser alteradas" +
+                    " com menos de 12 Horas de antecedência");
 
-            _context.Entry(appointment).State = EntityState.Modified;
+            _context.Entry(consulta).State = EntityState.Modified;
 
             try
             {
@@ -78,28 +82,32 @@ namespace PetDoor.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Consulta>> PostAppointment(Consulta appointment)
+        public async Task<ActionResult<Consulta>> PostAppointment(Consulta consulta)
         {
-            _context.Consulta.Add(appointment);
+            _context.Consulta.Add(consulta);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAppointment", new { id = appointment.ConsultaId }, appointment);
+            return CreatedAtAction("GetAppointment", new { id = consulta.ConsultaId }, consulta);
         }
 
         // DELETE: api/Appointments/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Consulta>> DeleteAppointment(int id)
         {
-            var appointment = await _context.Consulta.FindAsync(id);
-            if (appointment == null)
+            var consulta = await _context.Consulta.FindAsync(id);
+            if (consulta == null)
             {
                 return NotFound();
             }
 
-            _context.Consulta.Remove(appointment);
+            if(!ConsultaService.consultaMenosdeDozeHoras(consulta))
+                return BadRequest("Consultas não podem ser canceladas" +
+                    " com menos de 12 Horas de antecedência");
+
+            _context.Consulta.Remove(consulta);
             await _context.SaveChangesAsync();
 
-            return appointment;
+            return consulta;
         }
 
         private bool AppointmentExists(int id)

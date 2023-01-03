@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PetDoor.Models;
+using PetDoor.Services;
 
 namespace PetDoor.Controllers
 {
@@ -79,10 +80,23 @@ namespace PetDoor.Controllers
         [HttpPost]
         public async Task<ActionResult<Veterinario>> PostMedic(Veterinario Veterinario)
         {
-            _context.Veterinario.Add(Veterinario);
-            await _context.SaveChangesAsync();
+            try
+            {
+                VeterinarioService.addContext(_context);
+                string mensagem = VeterinarioService.validarVeterinario(Veterinario);
+                
+                if(mensagem != "Ok")
+                    return BadRequest(mensagem);
+
+                _context.Veterinario.Add(Veterinario);
+                await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMedic", new { id = Veterinario.VeterinarioId }, Veterinario);
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         // DELETE: api/Veterinario/5
