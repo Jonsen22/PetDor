@@ -14,12 +14,12 @@ import PostPet from "./scenarios/PostPet.js";
 // };
 
 export default () => {
-    group('Endpoint Get Tutor - Controller Tutor - PetDoor.Api', () => {
-        GetTutor();
-    });
+    // group('Endpoint Get Tutor - Controller Tutor - PetDoor.Api', () => {
+    //     GetTutor();
+    // });
     group('Endpoint Post Pet - Controller Pet - PetDoor.Api', () => {
         PostPet();
-    })
+    });
 
     sleep(1);
 }
