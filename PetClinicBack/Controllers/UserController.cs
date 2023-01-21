@@ -181,7 +181,7 @@ namespace PetDoor.Controllers
         }
 
         // GET: api/login
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<User> login([FromBody] Login login)
         {
 

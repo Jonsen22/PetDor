@@ -19,6 +19,11 @@ export default function registrarPet(props) {
     { label: "Feminino", value: "F" },
   ];
 
+  const castrados = [
+    {label: "Sim", value: "true"},
+    {label: "Não", value: "false"},
+  ]
+
   return (
     <div className={styles.formCadastroPet}>
       <div>
@@ -64,11 +69,22 @@ export default function registrarPet(props) {
           }}
         />
         <span style={{ margin: "5px 0 2px 0" }}>Castrado:</span>
-        <input
-          className={styles.inputLogin}
-          value={castrado}
-          onChange={(e) => {
-            setCastrado(e.target.value);
+        <Select
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              // padding: "0.1rem",
+              height: "31px",
+              margin: "0.3rem 0 0 5px",
+              background: "#d3d3d3",
+              borderRadius: "10px",
+              width: "185px",
+            }),
+          }}
+          placeholder="Castrado"
+          options={castrados}
+          onChange={(opt) => {
+            setCastrado(opt.value);
           }}
         />
         <span style={{ margin: "5px 0 2px 0" }}>Animal:</span>
