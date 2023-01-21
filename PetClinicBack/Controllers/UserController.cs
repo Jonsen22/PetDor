@@ -180,6 +180,21 @@ namespace PetDoor.Controllers
             return (response.HttpStatusCode == System.Net.HttpStatusCode.OK);
         }
 
+        // GET: api/login
+        [HttpGet("login")]
+        public async Task<User> login([FromBody] Login login)
+        {
+
+            List<User> users = await this.getUsers();
+
+            foreach (var user in users)
+            {
+                if (user.login == login.email && user.senha == login.senha) return user;
+            }
+
+            return null;
+        }
+
     }
 
 }
