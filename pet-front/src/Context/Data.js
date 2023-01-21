@@ -34,3 +34,15 @@ export async function getTutorById(id) {
         console.log(error)
     }
 }
+
+export async function login(email, senha) {
+
+    try {
+
+        return await axios.post(`https://localhost:5001/api/User/login`, {"email": email, "senha": senha});
+
+    } catch (error) {
+        console.log("Error :: ", error);
+    }
+
+}

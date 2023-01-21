@@ -16,6 +16,7 @@ namespace PetDoor.Controllers
     [ApiController]
     public class TutorController : ControllerBase
     {
+
         private readonly AppDbContext _context;
 
         public TutorController(AppDbContext context)
@@ -27,7 +28,7 @@ namespace PetDoor.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tutor>>> GetTutors()
         {
-     
+
             return await _context.Tutor.Include(u => u.Pets)
                 .ThenInclude(Pets => Pets.Vacinas)
                 .ThenInclude(Vacinas => Vacinas.TipoVacina).ToListAsync();
@@ -93,7 +94,7 @@ namespace PetDoor.Controllers
                 TutorService.addContext(_context);
                 string mensagem = TutorService.validarTutor(Tutor);
 
-                if(mensagem != "Ok")
+                if (mensagem != "Ok")
                     return BadRequest(mensagem);
 
                 _context.Tutor.Add(Tutor);
@@ -101,12 +102,12 @@ namespace PetDoor.Controllers
 
                 return CreatedAtAction("GetTutor", new { id = Tutor.TutorId }, Tutor);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                    throw new Exception(e.Message);
+                throw new Exception(e.Message);
             }
 
-            
+
         }
 
         // DELETE: api/Tutors/5

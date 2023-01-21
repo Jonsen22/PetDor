@@ -38,13 +38,13 @@ namespace PetDoor
                     opts.JsonSerializerOptions.Converters.Add(enumConverter);
                 });
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = 
+                options.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            
+
             //Instanciado aqui para conseguir usar a Local Key
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DB")));
-          
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
@@ -61,6 +61,8 @@ namespace PetDoor
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseCors("CorsPolicy");
 
