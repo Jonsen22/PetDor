@@ -1,9 +1,11 @@
-﻿namespace PetDoor.Services
+﻿using RestSharp;
+using RestSharp.Authenticators;
+using System;
+using System.Collections.Generic;
+using System.Net.Mail;
+
+namespace PetDoor.Services
 {
-using RestSharp;
-    using RestSharp.Authenticators;
-    using System;
-    using System.Collections.Generic;
 
     public class Funcoes
     {
@@ -83,5 +85,40 @@ using RestSharp;
 
             return response;
         }
+
+        public static void enviarEmail(string email, string titulo, string mensagem)
+        {
+            try
+            {
+                MailMessage newMail = new MailMessage();
+                // use the Gmail SMTP Host
+                SmtpClient client = new SmtpClient("smtp.gmail.com");
+
+                // Follow the RFS 5321 Email Standard
+                newMail.From = new MailAddress("petdorpcs@gmail.com", "PetD'or");
+
+                newMail.To.Add(email);// declare the email subject
+
+                newMail.Subject = titulo; // use HTML for the email body
+
+                newMail.IsBodyHtml = true; newMail.Body = mensagem;
+
+                // enable SSL for encryption across channels
+                client.EnableSsl = true;
+                // Port 465 for SSL communication
+                client.Port = 587;
+                // Provide authentication information with Gmail SMTP server to authenticate your sender account
+                client.Credentials = new System.Net.NetworkCredential("petdorpcs@gmail.com", "UNIRIO123");
+
+                client.Send(newMail); // Send the constructed mail
+                Console.WriteLine("Email Sent");
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error -" + ex);
+            }
+        }
+        
     }
 }

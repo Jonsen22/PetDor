@@ -30,6 +30,7 @@ namespace PetDoor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllers()
                 .AddJsonOptions(opts =>
                 {
@@ -38,10 +39,19 @@ namespace PetDoor
                 });
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = 
-                Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             
             //Instanciado aqui para conseguir usar a Local Key
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DB")));
+          
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +61,8 @@ namespace PetDoor
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 

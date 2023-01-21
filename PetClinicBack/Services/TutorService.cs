@@ -67,5 +67,33 @@ namespace PetDoor.Services
 
             return "Ok";
         } 
+        public static void notificicarTutor(Tutor tutor,Pet pet, Consulta consulta, string titulo, string dataAntiga = null, Vacina vacina = null)
+        {
+            string body = "";
+            switch (titulo)
+            {
+                case "Consulta Agendada":
+                    body = $"Olá, {tutor.Nome}! A consulta para o(a) {pet.Nome} " +
+                        $"foi agendada para o dia {consulta.Data}";
+                    break;
+                case "Consulta Remarcada":
+                    body = $"Olá, {tutor.Nome}! A consulta para o(a) {pet.Nome} " +
+                        $"agendada para o dia {consulta.Data} foi remarcada " +
+                        $"para o dia{dataAntiga}";
+                    break;
+                case "Consulta Desmarcada":
+                    body = $"Olá, {tutor.Nome}! A consulta para o(a) {pet.Nome} " +
+                       $"agendada para o dia {consulta.Data} foi desmarcada";
+                    break;
+                case "Vencimento Vacina":
+                    body = $"Olá, {tutor.Nome}! A Vacina para o(a) {pet.Nome} " +
+                        $"está para vencer no dia {vacina.DiaAplicacao.AddYears(1)}" +
+                        $"contate-nos para a reaplicação da dose!";
+                    break;
+            }
+
+                Funcoes.enviarEmail(tutor.Email, titulo, body);
+        }
     }
+
 }
