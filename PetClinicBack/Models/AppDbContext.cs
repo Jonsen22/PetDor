@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Amazon.DynamoDBv2.DataModel;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using PetDoor.Models;
@@ -159,12 +160,26 @@ namespace PetDoor.Models
 
             mb.Entity<VetEspecialidades>().HasKey(sc =>
             new { sc.VeterinarioId, sc.EspecialidadesId });
+
+
+            mb.Entity<User>()
+            .Property(v => v.id)
+            .IsRequired();
+
+            mb.Entity<User>()
+           .Property(v => v.login)
+           .IsRequired();
+
+            mb.Entity<User>()
+           .Property(v => v.senha)
+           .IsRequired();
+
+            mb.Entity<User>()
+           .Property(v => v.tutorId)
+           .IsRequired();
         }
-
-
-        
 
     }
 
-    
+
 }
