@@ -35,6 +35,18 @@ export async function getTutorById(id) {
     }
 }
 
+
+
+export async function getPetById(id) {
+    try {
+        const response = await axios.get(`https://localhost:5001/api/Pets/${id}`)
+        console.log(response.data);
+        return response.data;
+    } catch(error) {
+        console.log(error)
+    }
+}
+
 export async function login(email, senha) {
 
     try {

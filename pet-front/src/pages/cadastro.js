@@ -33,7 +33,7 @@ export default function Cadastro(props) {
       cep
     );
 
-    console.log(response.data.tutorId)
+    console.log(response)
 
     if (response.status != 201) return; //criar mensagem de erro
 

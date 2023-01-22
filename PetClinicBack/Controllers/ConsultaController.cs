@@ -29,11 +29,48 @@ namespace PetDoor.Controllers
                 .Include(a => a.Agenda).ToListAsync();
         }
 
+        // GET: api/Appointments/Pet/1
+        [HttpGet("Pet/{id}")]
+        public async Task<ActionResult<IEnumerable<Consulta>>> GetConsultaByPetId(int id)
+        {
+            //List<Consulta> consulta = new List<Consulta>();
+            //foreach(var item in _context.Consulta.Include(e => e.Pet))
+            //{
+            //    if (item.Pet.PetId == idPet)
+            //        consulta.Add(item);
+            //}
+
+            //return consulta;
+
+            //return await _context.Consulta
+            //    .Where(e => e.Pet.PetId == id).ToListAsync();
+
+            try
+            {
+                return await _context.Consulta
+                    .Include(a => a.Pet)
+                    .Where(e => e.Pet.PetId == id)
+                    .ToListAsync();
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
+            //return await _context.Consulta
+            //    .Include(a => a.Pet)
+            //    .Where(e => e.Pet.PetId == id)
+            //    .Include(a => a.Agenda).ToListAsync();
+        }
+
         // GET: api/Appointments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Consulta>> GetAppointment(int id)
         {
             var consulta = await _context.Consulta.FindAsync(id);
+
 
             if (consulta == null)
             {
@@ -100,7 +137,7 @@ namespace PetDoor.Controllers
                 return NotFound();
             }
 
-            if(!ConsultaService.consultaMenosdeDozeHoras(consulta))
+            if (!ConsultaService.consultaMenosdeDozeHoras(consulta))
                 return BadRequest("Consultas não podem ser canceladas" +
                     " com menos de 12 Horas de antecedência");
 
@@ -114,5 +151,7 @@ namespace PetDoor.Controllers
         {
             return _context.Consulta.Any(e => e.ConsultaId == id);
         }
+
+        
     }
 }
