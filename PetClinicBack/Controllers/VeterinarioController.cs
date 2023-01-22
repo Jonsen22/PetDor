@@ -25,7 +25,10 @@ namespace PetDoor.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Veterinario>>> GetVeterinario()
         {
-            return await _context.Veterinario.Include(m => m.VetEspecialidade).ToListAsync();
+            return await _context.Veterinario
+                .Include(m => m.VetEspecialidade)
+                .ThenInclude(vetEspecialidades => vetEspecialidades.Especialidade)
+                .ToListAsync();
         }
 
         // GET: api/Veterinario/5

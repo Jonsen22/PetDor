@@ -29,9 +29,9 @@ namespace PetDoor.Controllers
                 .Include(a => a.Agenda).ToListAsync();
         }
 
-        // GET: api/Appointments/Pet/1
-        [HttpGet("Pet/{id}")]
-        public async Task<ActionResult<IEnumerable<Consulta>>> GetConsultaByPetId(int id)
+        // GET: api/Appointments/v1/1
+        [HttpGet("consultasTutor/{id:int}")]
+        public async Task<ActionResult<IEnumerable<Consulta>>> GetConsultaByTutorId(int id)
         {
             //List<Consulta> consulta = new List<Consulta>();
             //foreach(var item in _context.Consulta.Include(e => e.Pet))
@@ -45,18 +45,14 @@ namespace PetDoor.Controllers
             //return await _context.Consulta
             //    .Where(e => e.Pet.PetId == id).ToListAsync();
 
-            try
-            {
+          
                 return await _context.Consulta
                     .Include(a => a.Pet)
-                    .Where(e => e.Pet.PetId == id)
+                    .Where(e => e.Pet.TutorId == id)
+                    .OrderByDescending(e => e.Data)
                     .ToListAsync();
 
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+           
 
 
             //return await _context.Consulta
@@ -68,7 +64,9 @@ namespace PetDoor.Controllers
         // GET: api/Appointments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Consulta>> GetAppointment(int id)
+
         {
+
             var consulta = await _context.Consulta.FindAsync(id);
 
 

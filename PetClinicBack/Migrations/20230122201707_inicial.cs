@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PetDoor.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,6 +53,20 @@ namespace PetDoor.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tutor", x => x.TutorId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    id = table.Column<string>(nullable: false),
+                    login = table.Column<string>(nullable: false),
+                    senha = table.Column<string>(nullable: false),
+                    tutorId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,10 +194,10 @@ namespace PetDoor.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descricao = table.Column<string>(nullable: true),
                     Presente = table.Column<string>(nullable: false),
-                    Custo = table.Column<int>(nullable: true),
+                    Custo = table.Column<int>(nullable: false),
                     Data = table.Column<DateTime>(type: "DateTime", nullable: false),
                     Duracao = table.Column<int>(nullable: false, defaultValue: 30),
-                    PetId = table.Column<int>(nullable: true),
+                    PetId = table.Column<int>(nullable: false),
                     AgendaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -200,7 +214,7 @@ namespace PetDoor.Migrations
                         column: x => x.PetId,
                         principalTable: "Pet",
                         principalColumn: "PetId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -243,6 +257,9 @@ namespace PetDoor.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Consulta");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Vacina");

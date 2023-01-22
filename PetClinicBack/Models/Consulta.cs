@@ -12,6 +12,8 @@ namespace PetDoor.Models
         public int Custo { get; set; }
         public DateTime Data { get; set; }
         public int Duracao { get; set; }
+        [ForeignKey("PetId")]
+        public int PetId { get; set; }
         public Pet Pet { get; set; }
         [ForeignKey("AgendaId")]
         public int AgendaId { get; set; }

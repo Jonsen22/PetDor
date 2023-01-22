@@ -38,7 +38,7 @@ export default function Cadastro(props) {
     if (response.status != 201) return; //criar mensagem de erro
 
     router.push({
-      pathname: '/cadastroPet/[id]',
+      pathname: '/cadastrarPet/[id]',
       query: {id: response.data.tutorId}
     });
   };
