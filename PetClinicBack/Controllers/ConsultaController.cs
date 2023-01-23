@@ -135,9 +135,9 @@ namespace PetDoor.Controllers
                 return NotFound();
             }
 
-            if (!ConsultaService.consultaMenosdeDozeHoras(consulta))
-                return BadRequest("Consultas não podem ser canceladas" +
-                    " com menos de 12 Horas de antecedência");
+            //if (!ConsultaService.consultaMenosdeDozeHoras(consulta))
+            //    return BadRequest("Consultas não podem ser canceladas" +
+            //        " com menos de 12 Horas de antecedência");
 
             _context.Consulta.Remove(consulta);
             await _context.SaveChangesAsync();

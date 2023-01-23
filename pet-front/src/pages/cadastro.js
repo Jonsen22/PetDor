@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useState } from "react";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
-import { postTutor } from "../Context/Data";
+import { postTutor, postUser } from "../Context/Data";
 import Select from "react-select";
 
 const generos = [
@@ -11,7 +11,7 @@ const generos = [
 ];
 
 export default function Cadastro(props) {
-  const router = useRouter()
+  const router = useRouter();
   const [nome, setNome] = useState("");
   const [genero, setGenero] = useState("");
   const [aniversario, setAniversario] = useState("");
@@ -23,7 +23,7 @@ export default function Cadastro(props) {
   //   const [cadastroConcluido, setCadastroConcluido] = useState(false)
 
   const handleSubmit = async () => {
-    const response = await postTutor(
+    await postTutor(
       nome,
       genero.charAt(0),
       aniversario,
@@ -31,15 +31,30 @@ export default function Cadastro(props) {
       cpf,
       celular,
       cep
-    );
+    ).then(async (response) => {
+      console.log(response);
 
-    console.log(response)
+      if (response.status != 201) return; //criar mensagem de erro
 
-    if (response.status != 201) return; //criar mensagem de erro
+      console.log(response.data.tutorId);
+      let id = response.data.tutorId;
+      if (id != undefined) {
+        if (id < 10) {
+          id = "0" + response.data.tutorId.toString();
+          console.log(id);
+        } else id = response.data.tutorId.toString();
+      }
 
-    router.push({
-      pathname: '/cadastrarPet/[id]',
-      query: {id: response.data.tutorId}
+      console.log(id);
+      const responseUser = await postUser(email, senha, id);
+
+      if (responseUser.status != 200) return;
+
+      router.push({
+        pathname: "/cadastroPet/[id]",
+        query: { id: response.data.tutorId },
+      });
+      console.log(responseUser);
     });
   };
 
@@ -101,7 +116,7 @@ export default function Cadastro(props) {
                 margin: "0.3rem 0 0 5px",
                 background: "#d3d3d3",
                 borderRadius: "10px",
-                width: "185px"
+                width: "185px",
               }),
             }}
             placeholder="Gênero"

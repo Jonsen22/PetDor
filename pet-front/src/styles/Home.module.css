@@ -192,9 +192,9 @@
   display: flex;
   background: #f1f7fe;
   border-radius: 30px;
-  width: 75%;
+  width: 20%;
   height: 70%;
-  min-width: 600px;
+  min-width: 200px;
   /* justify-content: center;
   align-items: center; */
 }

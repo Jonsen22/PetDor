@@ -98,7 +98,7 @@ export default function Cadastro(props) {
 
   return (
     <div className={styles.containerLogin}>
-      <div className={styles.cadastro} style={{ height: "70%", width: "40%" }}>
+      <div className={styles.cadastro} style={{ height: "70%", width: "20%" }}>
         <div className={styles.titulo}>
           <span> Agendar Consulta</span>
         </div>

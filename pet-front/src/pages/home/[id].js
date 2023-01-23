@@ -2,32 +2,37 @@ import VisualizarPet from "../../components/visualizarPets";
 import VisualizarConsultas from "../../components/visualizarConsultas";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { getConsultasByTutorId, getTutorById } from "../../Context/Data";
+import {
+  getConsultasByTutorId,
+  getTutorById,
+  deleteConsulta,
+} from "../../Context/Data";
 import styles from "../../styles/Home.module.css";
 
 export default function home(props) {
   const [consultas, setConsultas] = useState([]);
   const [tutor, setTutor] = useState({});
+  const [pets, setPets] = useState([])
   const router = useRouter();
   let tutorId = null;
 
   const deslogar = () => {
     router.push("/");
-  }
+  };
 
   const marcarConsulta = (e) => {
     router.push({
-      pathname: '/home/marcarConsulta/[id]',
-      query: {id: tutorId}
+      pathname: "/home/marcarConsulta/[id]",
+      query: { id: tutorId },
     });
-  }
+  };
 
   const adicionarPet = (e) => {
     router.push({
-      pathname: '/home/cadastrarPet/[id]',
-      query: {id: tutorId}
+      pathname: "/home/cadastrarPet/[id]",
+      query: { id: tutorId },
     });
-  }
+  };
 
   const getTutorId = async () => {
     tutorId = router.query.id;
@@ -36,7 +41,7 @@ export default function home(props) {
   const getConsultas = async () => {
     let TutorRes = await getTutorById(tutorId);
     setTutor(TutorRes);
-    console.log(TutorRes)
+    console.log(TutorRes);
     let ConsultaRes = await getConsultasByTutorId(tutorId);
     const listaConsultas = [];
 
@@ -46,13 +51,23 @@ export default function home(props) {
       });
     }
 
+    const listPets = [];
+    if (TutorRes != undefined) {
+      TutorRes.pets.forEach((element) => {
+        listPets.push(element);
+      });
+    }
+    setPets(listPets)
+    console.log(listPets)
     setConsultas(listaConsultas);
   };
 
   getTutorId();
-  
+
   useEffect(() => {
-    if (tutorId != null) getConsultas();
+    if (tutorId != null) {
+      getConsultas();
+    }
 
     // getConsultas(tutor);
   }, [tutorId]);
@@ -61,8 +76,15 @@ export default function home(props) {
     <div className={styles.containerHome}>
       <div className={styles.menuHome}>
         <div className={styles.navbarHome}>
-          <span> Bem vindo, {tutor.nome}!</span>
-          <button className={styles.buttonLogout} onClick={() => deslogar()}>sair</button>
+          {tutor != undefined ? (
+            <span> Bem vindo, {tutor.nome}!</span>
+          ) : (
+            <span>Bem vindo!</span>
+          )}
+          {console.log(tutor)}
+          <button className={styles.buttonLogout} onClick={() => deslogar()}>
+            sair
+          </button>
         </div>
         <div className={styles.menusHomePage}>
           <div className={styles.consultasMenu}>
@@ -98,12 +120,12 @@ export default function home(props) {
               <button
                 className={styles.buttonLogin}
                 style={{ marginRight: "15px" }}
-                onClick={(e) => adicionarPet() }
+                onClick={(e) => adicionarPet()}
               >
                 +
               </button>
             </div>
-            <VisualizarPet style={{ border: "5px solid green" }} />
+            <VisualizarPet petsLista={pets} style={{ border: "5px solid green" }} />
             <div></div>
           </div>
         </div>

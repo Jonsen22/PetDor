@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import Select from "react-select";
 import { useRouter } from "next/router";
+import { postPet } from "../Context/Data";
 
 export default function registrarPet(props) {
   const [nome, setNome] = useState("");
@@ -16,6 +17,29 @@ export default function registrarPet(props) {
   console.log(tutorId);
 
   const router = useRouter();
+
+  const submit = async () => {
+    const response = await postPet(
+      nome,
+      genero.charAt(0),
+      aniversario,
+      castrado,
+      animal,
+      raca,
+      descricao,
+      tutorId
+    )
+
+    console.log(response)
+
+    if (response.status != 201) 
+      alert("deu ruim") //criar mensagem de erro
+
+    router.push({
+      pathname: '/home/[id]',
+      query: {id: tutorId}
+    });
+  }
 
   const voltar = () => {
     router.push({
@@ -111,7 +135,7 @@ export default function registrarPet(props) {
           className={styles.inputLogin}
           value={raca}
           onChange={(e) => {
-            setraca(e.target.value);
+            setRaca(e.target.value);
           }}
         />
         <span style={{ margin: "5px 0 2px 0" }}>Descrição:</span>
@@ -124,7 +148,8 @@ export default function registrarPet(props) {
         />
       </div>
       <div>
-        <button className={styles.buttonLogin} style={{ margin: "20px 0 0 0" }}>
+        <button className={styles.buttonLogin} style={{ margin: "20px 0 0 0" }}
+        onClick={(e) => submit()}>
           Registrar
         </button>
         {props.voltar ? (

@@ -17,7 +17,7 @@ export default function cadastroPet(props) {
 
                 <RegistrarPet tutorId={router.query.id}/>
                  
-                <VisualizarPet tutorId={router.query.id} border={"1px solid black"}/>
+                {/* <VisualizarPet petsLista={null} tutorId={router.query.id} border={"1px solid black"}/> */}
                 
             </div>
         </div>
