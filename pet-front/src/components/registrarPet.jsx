@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import Select from "react-select";
+import { useRouter } from "next/router";
 
 export default function registrarPet(props) {
   const [nome, setNome] = useState("");
@@ -14,15 +15,24 @@ export default function registrarPet(props) {
 
   console.log(tutorId);
 
+  const router = useRouter();
+
+  const voltar = () => {
+    router.push({
+      pathname: '/home/[id]',
+      query: {id: tutorId}
+    });
+  }
+
   const generos = [
     { label: "Masculino", value: "M" },
     { label: "Feminino", value: "F" },
   ];
 
   const castrados = [
-    {label: "Sim", value: "true"},
-    {label: "Não", value: "false"},
-  ]
+    { label: "Sim", value: "true" },
+    { label: "Não", value: "false" },
+  ];
 
   return (
     <div className={styles.formCadastroPet}>
@@ -117,6 +127,15 @@ export default function registrarPet(props) {
         <button className={styles.buttonLogin} style={{ margin: "20px 0 0 0" }}>
           Registrar
         </button>
+        {props.voltar ? (
+          <button
+          onClick={(e) => voltar()}
+            className={styles.buttonLogin}
+            style={{ margin: "20px 0 0 20px", background:"green" }}
+          >
+            voltar
+          </button>
+        ) : null}
       </div>
     </div>
   );

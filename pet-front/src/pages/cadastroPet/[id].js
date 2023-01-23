@@ -7,7 +7,7 @@ import VisualizarPet from "../../components/visualizarPets";
 export default function cadastroPet(props) {
 
     const router = useRouter()
-    // console.log(router.query)
+    console.log(router.query)
 
     return (
 

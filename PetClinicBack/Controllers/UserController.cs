@@ -157,9 +157,9 @@ namespace PetDoor.Controllers
         {
 
             Dictionary<string, AttributeValue> key = new Dictionary<string, AttributeValue>()
-            {
-                { "id", new AttributeValue { S = id} }
-            };
+           {
+               { "id", new AttributeValue { S = id} }
+           };
 
             var request = new DeleteItemRequest
             {

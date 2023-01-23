@@ -10,8 +10,8 @@ using PetDoor.Models;
 namespace PetDoor.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221202135608_Inicial")]
-    partial class Inicial
+    [Migration("20230122201707_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,7 +65,7 @@ namespace PetDoor.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(30);
 
-                    b.Property<int?>("PetId")
+                    b.Property<int>("PetId")
                         .HasColumnType("int");
 
                     b.Property<string>("Presente")
@@ -97,48 +97,7 @@ namespace PetDoor.Migrations
                     b.ToTable("Especialidade");
                 });
 
-            modelBuilder.Entity("PetDoor.Models.TipoVacina", b =>
-                {
-                    b.Property<int>("TipoVacinaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Estoque")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Iniciais")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Validade")
-                        .HasColumnType("int");
-
-                    b.HasKey("TipoVacinaId");
-
-                    b.ToTable("TipoVacina");
-                });
-
-            modelBuilder.Entity("PetDoor.Models.VetEspecialidades", b =>
-                {
-                    b.Property<int>("VeterinarioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EspecialidadesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("VeterinarioId", "EspecialidadesId");
-
-                    b.HasIndex("EspecialidadesId");
-
-                    b.ToTable("VetEspecialidades");
-                });
-
-            modelBuilder.Entity("PetShopBack.Models.Pet", b =>
+            modelBuilder.Entity("PetDoor.Models.Pet", b =>
                 {
                     b.Property<int>("PetId")
                         .ValueGeneratedOnAdd()
@@ -183,7 +142,33 @@ namespace PetDoor.Migrations
                     b.ToTable("Pet");
                 });
 
-            modelBuilder.Entity("PetShopBack.Models.Tutor", b =>
+            modelBuilder.Entity("PetDoor.Models.TipoVacina", b =>
+                {
+                    b.Property<int>("TipoVacinaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Estoque")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Iniciais")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Validade")
+                        .HasColumnType("int");
+
+                    b.HasKey("TipoVacinaId");
+
+                    b.ToTable("TipoVacina");
+                });
+
+            modelBuilder.Entity("PetDoor.Models.Tutor", b =>
                 {
                     b.Property<int>("TutorId")
                         .ValueGeneratedOnAdd()
@@ -226,7 +211,29 @@ namespace PetDoor.Migrations
                     b.ToTable("Tutor");
                 });
 
-            modelBuilder.Entity("PetShopBack.Models.Vacina", b =>
+            modelBuilder.Entity("PetDoor.Models.User", b =>
+                {
+                    b.Property<string>("id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("senha")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("tutorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("PetDoor.Models.Vacina", b =>
                 {
                     b.Property<int>("VacinaId")
                         .ValueGeneratedOnAdd()
@@ -251,7 +258,22 @@ namespace PetDoor.Migrations
                     b.ToTable("Vacina");
                 });
 
-            modelBuilder.Entity("PetShopBack.Models.Veterinario", b =>
+            modelBuilder.Entity("PetDoor.Models.VetEspecialidades", b =>
+                {
+                    b.Property<int>("VeterinarioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EspecialidadesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("VeterinarioId", "EspecialidadesId");
+
+                    b.HasIndex("EspecialidadesId");
+
+                    b.ToTable("VetEspecialidades");
+                });
+
+            modelBuilder.Entity("PetDoor.Models.Veterinario", b =>
                 {
                     b.Property<int>("VeterinarioId")
                         .ValueGeneratedOnAdd()
@@ -299,7 +321,7 @@ namespace PetDoor.Migrations
 
             modelBuilder.Entity("PetDoor.Models.Agenda", b =>
                 {
-                    b.HasOne("PetShopBack.Models.Veterinario", "Veterinario")
+                    b.HasOne("PetDoor.Models.Veterinario", "Veterinario")
                         .WithMany()
                         .HasForeignKey("VeterinarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -314,9 +336,35 @@ namespace PetDoor.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PetShopBack.Models.Pet", "Pet")
+                    b.HasOne("PetDoor.Models.Pet", "Pet")
                         .WithMany()
-                        .HasForeignKey("PetId");
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PetDoor.Models.Pet", b =>
+                {
+                    b.HasOne("PetDoor.Models.Tutor", "Tutor")
+                        .WithMany("Pets")
+                        .HasForeignKey("TutorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PetDoor.Models.Vacina", b =>
+                {
+                    b.HasOne("PetDoor.Models.Pet", "Pet")
+                        .WithMany("Vacinas")
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PetDoor.Models.TipoVacina", "TipoVacina")
+                        .WithMany("Vacinas")
+                        .HasForeignKey("TipoVacinaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PetDoor.Models.VetEspecialidades", b =>
@@ -327,33 +375,9 @@ namespace PetDoor.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PetShopBack.Models.Veterinario", "Veterinario")
+                    b.HasOne("PetDoor.Models.Veterinario", "Veterinario")
                         .WithMany("VetEspecialidade")
                         .HasForeignKey("VeterinarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PetShopBack.Models.Pet", b =>
-                {
-                    b.HasOne("PetShopBack.Models.Tutor", "Tutor")
-                        .WithMany("Pets")
-                        .HasForeignKey("TutorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PetShopBack.Models.Vacina", b =>
-                {
-                    b.HasOne("PetShopBack.Models.Pet", "Pet")
-                        .WithMany("Vacinas")
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetDoor.Models.TipoVacina", "TipoVacina")
-                        .WithMany("Vacinas")
-                        .HasForeignKey("TipoVacinaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

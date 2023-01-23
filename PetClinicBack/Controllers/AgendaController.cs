@@ -24,7 +24,10 @@ namespace PetDoor.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Agenda>>> GetAgendas()
         {
-            return await _context.Agenda.Include(a => a.Veterinario)
+
+
+            return await _context.Agenda.Include(a => a.Veterinario).ThenInclude(m => m.VetEspecialidade)
+                .ThenInclude(vetEspecialidades => vetEspecialidades.Especialidade)
                 .Include(a => a.Consultas).ThenInclude(appointment => appointment.Pet).ToListAsync();
         }
 

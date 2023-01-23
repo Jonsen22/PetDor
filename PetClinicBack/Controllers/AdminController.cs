@@ -30,19 +30,32 @@ namespace PetDoor.Controllers
 
         // GET: api/Admin
         [HttpGet]
-        public async Task<List<Dictionary<string, AttributeValue>>> getAdmins()
+        public async Task<List<Admin>> getAdmins()
         {
 
             var request = new ScanRequest { TableName = this.tableName };
 
             var response = await client.ScanAsync(request);
 
-            return response.Items;
+            List<Admin> admList = new List<Admin>();
+
+            foreach (var item in response.Items)
+            {
+                Admin newAdmin = new Admin();
+
+                newAdmin.id = item["id"].S;
+                newAdmin.login = item["login"].S;
+                newAdmin.senha = item["senha"].S;
+
+                admList.Add(newAdmin);
+            }
+
+            return admList;
         }
 
         // GET: api/Admin/04
         [HttpGet("{id}")]
-        public async Task<Dictionary<string, Amazon.DynamoDBv2.Model.AttributeValue>> getAdminById(string id)
+        public async Task<Admin> getAdminById(string id)
         {
 
             Dictionary<string, AttributeValue> key = new Dictionary<string, AttributeValue>()
@@ -59,7 +72,14 @@ namespace PetDoor.Controllers
 
             // Issue request
             var response = await client.GetItemAsync(request);
-            return response.Item;
+
+            Admin newAdmin = new Admin();
+
+            newAdmin.id = response.Item["id"].S;
+            newAdmin.login = response.Item["login"].S;
+            newAdmin.senha = response.Item["senha"].S;
+
+            return newAdmin;
         }
 
         // PUT: api/Admin
@@ -67,15 +87,15 @@ namespace PetDoor.Controllers
         public async Task<bool> putAdmin(string id, Admin Admin)
         {
 
-            Dictionary<string, AttributeValue> currentAdmin = await this.getAdminById(id);
+            Admin currentAdmin = await this.getAdminById(id);
 
             Admin newAdmin = new Admin();
 
             if (Admin.login != null) newAdmin.login = Admin.login;
-            else newAdmin.login = currentAdmin["login"].S;
+            else newAdmin.login = currentAdmin.login;
 
             if (Admin.senha != null) newAdmin.senha = Admin.senha;
-            else newAdmin.senha = currentAdmin["senha"].S;
+            else newAdmin.senha = currentAdmin.senha;
 
             var request = new PutItemRequest
             {
@@ -131,9 +151,9 @@ namespace PetDoor.Controllers
         {
 
             Dictionary<string, AttributeValue> key = new Dictionary<string, AttributeValue>()
-            {
-                { "id", new AttributeValue { S = id} }
-            };
+           {
+               { "id", new AttributeValue { S = id} }
+           };
 
             var request = new DeleteItemRequest
             {

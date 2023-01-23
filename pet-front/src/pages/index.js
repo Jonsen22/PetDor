@@ -23,7 +23,8 @@ export default function Home() {
       alert("Erro no Login, verifique seu login.")
     } else {
       router.push({
-        pathname: '/home',
+        pathname: '/home/[id]',
+        query: {id: res.data.tutorId}
       });
     }
   };
