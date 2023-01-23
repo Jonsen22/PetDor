@@ -1,17 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PetDoor.Models;
-using PetDoor.Services;
-using PetDoor.Exceptions;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
-using Newtonsoft.Json;
-using Amazon.DynamoDBv2.DataModel;
 
 namespace PetDoor.Controllers
 {
@@ -22,9 +14,7 @@ namespace PetDoor.Controllers
     {
 
         private AmazonDynamoDBClient client;
-        private DynamoDBContext context;
         private readonly string tableName = "Administrador";
-        // private readonly AppDbContext _context;
 
         public AdminController(AppDbContext context)
         {
