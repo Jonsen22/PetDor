@@ -1,16 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PetDoor.Models;
-using PetDoor.Services;
-using PetDoor.Exceptions;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
-using Newtonsoft.Json;
 using Amazon.DynamoDBv2.DataModel;
 
 namespace PetDoor.Controllers
@@ -22,9 +15,7 @@ namespace PetDoor.Controllers
     {
 
         private AmazonDynamoDBClient client;
-        private DynamoDBContext context;
         private readonly string tableName = "User";
-        // private readonly AppDbContext _context;
 
         public UserController(AppDbContext context)
         {
@@ -166,9 +157,9 @@ namespace PetDoor.Controllers
         {
 
             Dictionary<string, AttributeValue> key = new Dictionary<string, AttributeValue>()
-            {
-                { "id", new AttributeValue { S = id} }
-            };
+           {
+               { "id", new AttributeValue { S = id} }
+           };
 
             var request = new DeleteItemRequest
             {
